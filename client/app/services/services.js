@@ -148,42 +148,41 @@ angular.module('app.services', [])
 
     },
 
-    playGame: function(roundEndCb) {
-
-      function _gameEnd() {
-        console.log('game complete')
-      }
-
-      function _roundEnd() {
-        //start a new round
-        roundEndCb();
-        gameStart();
-      }
-
+    playGame: function(roundEndCb, gameEndCb) {
+      //Triggered at the start of every question. Updates the question to the next one
       function _updateQuestion() {
         $rootScope.questionSet.shift();
       }
 
-      function _startTimer() {
+      //Triggered at the start of every question. Starts a timer of roundDuration milliseconds.
+      function _startTimer(roundDuration) {
         $timeout(function() {
           _roundEnd();
-        }, 7000)
+        }, roundDuration)
       }
 
+      //Triggered at the end of every question. starts a new round aka next question.
+      function _roundEnd() {
+        roundEndCb();
+        gameStart();
+      }
+
+      //Triggered at the end of every game (aka all questions done)
+      function _gameEnd() {
+        gameEndCb();
+      }
+
+      //starts the whole game. gameStart is recursive as it calls itself inside of startTimer via _roundEnd(). Once game has ended (as determined by there being no more questions in questionSet) _gameEnd is triggered
       function gameStart() {
         if ($rootScope.questionSet.length >1) {
           _updateQuestion();
-          _startTimer();
+          _startTimer(3000);
         } else {
           _gameEnd();
         }
       }
 
       gameStart();
-
-
-
-
     },
 
     sendQuestion: function(){

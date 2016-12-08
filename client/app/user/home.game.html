@@ -14,23 +14,26 @@
 
     <form ng-repeat="choice in questionSet[0].answerChoices track by $index">
     <!-- https://docs.angularjs.org/api/ng/input/input%5Bradio%5D -->
-      <input class="answerChoice" type="radio" ng-model="userAnswer.index" ng-value="$index">
+      <input class="answerChoice" type="radio" ng-model="gameState.index" ng-value="$index">
         <label for="answerChoice">{{choice}}</label>
       </input>
 
     </form><br>
 
-    <div ng-if="userAnswer.isCorrect === 'yes'" class="feedback correct">
+    <div ng-if="gameState.isCorrect === 'yes'" class="feedback correct">
       You are CORRECT!
     </div>
-    <div ng-if="userAnswer.isCorrect === 'no'" class="feedback incorrect">
+    <div ng-if="gameState.isCorrect === 'no'" class="feedback incorrect">
       You are INCORRECT! Correct answer is {{questionSet[0].correct_answer}}
     </div>
-    <div ng-if="userAnswer.isCorrect === 'pending'" class="feedback pending">
+    <div ng-if="gameState.isCorrect === 'pending'" class="feedback pending">
       Pick an answer SLOWPOKE!
     </div>
+    <div ng-if="gameState.gameFinished" class="endgame-message">
+      you got {{gameState.numCorrect}}/{{gameState.questionsAttempted}} correct
+    </div>
 <!--     TODO: use ng-model to capture user selected answers, and check if it is correct. -->
-    <button class="btn btn-primary" type="submit" ng-click="submitAnswer()" ng-disabled="userAnswer.isCorrect !== 'pending'">Submit answer</button>
+    <button class="btn btn-primary" type="submit" ng-click="submitAnswer()" ng-disabled="gameState.isCorrect !== 'pending'">Submit answer</button>
 
 </div>
 

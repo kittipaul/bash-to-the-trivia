@@ -6,9 +6,13 @@ angular.module('app.user', ['app.services'])
   $scope.rooms = UserInfo.rooms;
   $scope.avatar = UserInfo.avatar;
   $scope.users = {};
-  $scope.userAnswer = {
-    index: -1, //default value. index MUST be nested inside userAnswer for ng-model to work here
-    isCorrect: "pending"
+  //gameState properties MUST be nested inside gameState for ng-model to work here
+  $scope.gameState = {
+    index: -1, //index that user has selected.
+    isCorrect: "pending",//pending = no answer yet. "yes"/"no" self explanatory
+    numCorrect: 0,
+    questionsAttempted: 0, //total num of questions
+    gameFinished: false
   };
 
 
@@ -64,12 +68,19 @@ angular.module('app.user', ['app.services'])
   // })
 
   $scope.startGame = function() {
+    // _resetGameState();
     UserInfo.getQuestions(function() {
-        UserInfo.playGame(handleRoundEnd);
+        UserInfo.playGame(handleRoundEnd, handleGameEnd);
     });
 
     function handleRoundEnd(answerCorrect) {
-      $scope.userAnswer.isCorrect = "pending";
+      $scope.gameState.questionsAttempted++;
+      $scope.gameState.isCorrect = "pending";
+    }
+
+    function handleGameEnd() {
+      console.log('you got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
+      $scope.gameState.gameFinished = true;
     }
   };
 
@@ -86,11 +97,12 @@ angular.module('app.user', ['app.services'])
   //   }
 
   $scope.submitAnswer=function() {
-    UserInfo.evaluateAnswer($scope.userAnswer.index, function(isCorrect) {
+    UserInfo.evaluateAnswer($scope.gameState.index, function(isCorrect) {
       if (isCorrect) {
-        $scope.userAnswer.isCorrect = "yes";
+        $scope.gameState.numCorrect++;
+        $scope.gameState.isCorrect = "yes";
       } else {
-        $scope.userAnswer.isCorrect = "no";
+        $scope.gameState.isCorrect = "no";
       }
     });
   }
