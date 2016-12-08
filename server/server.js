@@ -76,6 +76,13 @@ io.on('connection', function(socket) {
     socket.leave(socket.room);
   });
 
+//////ALISSSA Starting Game:
+
+  // socket.on('startGame', function() {
+
+
+  // });
+
 });
 
 app.get('/api/people', function(req, res) {
@@ -248,7 +255,7 @@ function parser (string) {
 };
 
 app.get('/api/questions', function(req, res) {
-    
+
   var promise = new Promise(function(resolve, reject) {
     request.get(questionApi, function (error, response, body) {
       if (error && !response.statusCode == 200) {
