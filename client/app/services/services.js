@@ -149,6 +149,7 @@ angular.module('app.services', [])
     },
 
     playGame: function(roundEndCb, gameEndCb) {
+      var roundDuration = 7000;
       //Triggered at the start of every question. Updates the question to the next one
       function _updateQuestion() {
         $rootScope.questionSet.shift();
@@ -176,7 +177,7 @@ angular.module('app.services', [])
       function gameStart() {
         if ($rootScope.questionSet.length >1) {
           _updateQuestion();
-          _startTimer(3000);
+          _startTimer(roundDuration);
         } else {
           _gameEnd();
         }
