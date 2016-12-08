@@ -1,6 +1,6 @@
 angular.module('app.user', ['app.services'])
 
-.controller('HomeController', function($scope, UserInfo) {
+.controller('HomeController', function($scope, UserInfo, $interval) {
   //Passing data from the UserInfo factory
   $scope.user = UserInfo.user;
   $scope.rooms = UserInfo.rooms;
@@ -18,11 +18,12 @@ angular.module('app.user', ['app.services'])
     UserInfo.addNewRoom(newRoomName);
   };
 
-  $scope.startGame = function() {
-    UserInfo.getQuestions().then(function() {
+  // $scope.startGame = function() {
+  //   UserInfo.getQuestions().then(function() {
 
-    });
-  };
+  //   });
+  // };
+
 
 
 //SOCKET.IO EVENT LISTENNERS//
@@ -43,6 +44,53 @@ angular.module('app.user', ['app.services'])
   UserInfo.on('InvitetoNewRoom', function(roomInfo) {
     UserInfo.invitedToNewRoom(roomname);
   });
+
+
+
+///ALISSA Starting Game:
+  // UserInfo.on('startGame', function(){
+  //   UserInfo.startGame();
+
+  // });
+
+  // UserInfo.on('submitAnswer', function() {
+  //   console.log('socket fired on ctrl side')
+  //   UserInfo.submitAnswer();
+  // })
+
+  $scope.startGame = function() {
+    UserInfo.startGame();
+  };
+
+  $scope.sendQuestion = function() {
+    UserInfo.sendQuestion();
+  };
+
+  // var len = $scope.questionSet.length;
+  //   if (len === 0 ) {
+  //     console.log(len,'length checki')
+  //     return;
+
+  //     // $interval.cancel();
+  //   }
+
+  $interval(function() {
+    $scope.sendQuestion();
+  }, 5000);
+
+
+
+
+  $scope.submitAnswer=function() {
+    UserInfo.submitAnswer();
+  }
+
+//after an answer has been submited, check if it is right or wrong
+  // $scope.submitAnswer=function() {
+  //   UserInfo.submitAnswer();
+  // };
+
+
 //////////////////////////////
 
 })
@@ -60,9 +108,10 @@ angular.module('app.user', ['app.services'])
 .controller('GameController', function($scope, UserInfo) {
 
   //Local scope variable
-  $scope.activeUsers = [];
-  $scope.questions = [];
+  $scope.activeUsers = ['dummy1', 'dummy2'];
+  $scope.questions = ['what\'s your name?'];
   $scope.answers = [];
+  $scope.choices=['A','B','C','D']
 
 
 

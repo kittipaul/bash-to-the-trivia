@@ -1,16 +1,24 @@
 <div id="page-game-wrapper">
-	<h2>Game</h2><hr>
+	<h2>Game on in {{room.roomname}}</h2><hr>
 
-	<h4>Players in game</h4>
-  <ul>
-  	<li>[Some names here]</li>
-    <li ng-repeat="name in users.username">{{name}}</li>
-  </ul><br>
-	<span id="timer"><strong>Timer... [tick tock tick tock]</strong></span><br><br>
-  <h5><strong>Q: </strong>[Display the question here]</h5>
-  <form>
-  	<label><strong>Answer: </strong></label>
-    <input type="text" placeholder="Write the answer in this field"></input><br>
-    <button class="btn btn-primary" type="submit">Submit answer</button>
-  </form>
+	<h4>Players</h4>
+ <ul ng-repeat="name in users.usernames">{{name}}</ul>
+<br>
+
+	<span id="timer"><strong>Timer... </strong></span><br><br>
+
+
+  <h5><strong>Question: {{questionSet[0].question}}</strong></h5>
+
+  	<label><strong>Answers: </strong></label>
+
+    <ul ng-repeat="choice in questionSet[0].answerChoices">
+    <input class="answerChoice" type="radio"><label for="answerChoice">{{choice}}</label></input></ul><br>
+
+
+<!--     TODO: use ng-model to capture user selected answers, and check if it is correct. -->
+
+    <button class="btn btn-primary" type="submit" ng-click="submitAnswer()">Submit answer</button>
+
 </div>
+

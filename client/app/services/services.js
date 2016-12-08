@@ -107,8 +107,57 @@ angular.module('app.services', [])
     },
     invitedToNewRoom: function(roomInfo) {
       this.rooms[roomInfo.roomname] = roomInfo;
-    }
+    },
+//////ALISSA Starting Game:
 
+    startGame: function() {
+
+      function randomizeAnswerChoices(question) {
+        var answers = [];
+        answers.push(question.correct_answer);
+        for (var i = 0; i < question.incorrect_answers.length; i++) {
+          answers.push(question.incorrect_answers[i]);
+        }
+        answers = shuffleArr(answers);
+        return answers;
+      }
+
+      function shuffleArr(arr) {
+        for (var i = 0; i < arr.length; i++) {
+          var targetIndex = Math.floor(Math.random()*arr.length);
+          var temp = arr[targetIndex];
+          arr[targetIndex] = arr[i];
+          arr[i] = temp;
+        }
+        return arr;
+      }
+    //TODO: Emit server request to REDIS DB to get the database of all the active users in the currentroom
+      return $http({
+        method: 'GET',
+        url: '/api/questions',
+      }).then(function(resp){
+
+        for (var i = 0; i < resp.data.length; i++) {
+          resp.data[i].answerChoices = randomizeAnswerChoices(resp.data[i]);
+        }
+        $rootScope.questionSet=resp.data;
+        console.log('questionSet', JSON.parse(JSON.stringify($rootScope.questionSet)));
+      })
+
+
+
+    },
+
+    sendQuestion: function(){
+      if ($rootScope.questionSet && $rootScope.questionSet.length >1) {
+        $rootScope.questionSet.shift();
+      }
+
+    },
+
+    submitAnswer: function() {
+      console.log('submit answer button has been clicked')
+    }
 
   };
 });
