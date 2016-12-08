@@ -1,16 +1,39 @@
 <div id="page-game-wrapper">
-	<h2>Game</h2><hr>
+	<h2>Game on in {{room.roomname}}</h2><hr>
 
-	<h4>Players in game</h4>
-  <ul>
-  	<li>[Some names here]</li>
-    <li ng-repeat="name in users.username">{{name}}</li>
-  </ul><br>
-	<span id="timer"><strong>Timer... [tick tock tick tock]</strong></span><br><br>
-  <h5><strong>Q: </strong>[Display the question here]</h5>
-  <form>
-  	<label><strong>Answer: </strong></label>
-    <input type="text" placeholder="Write the answer in this field"></input><br>
-    <button class="btn btn-primary" type="submit">Submit answer</button>
-  </form>
+	<h4>Players</h4>
+ <ul ng-repeat="name in users.usernames">{{name}}</ul>
+<br>
+
+	<span id="timer"><strong>Timer... </strong></span><br><br>
+
+
+  <h5><strong>Question: {{questionSet[0].question}}</strong></h5>
+
+  	<label><strong>Answers: </strong></label>
+
+    <form ng-repeat="choice in questionSet[0].answerChoices track by $index">
+    <!-- https://docs.angularjs.org/api/ng/input/input%5Bradio%5D -->
+      <input class="answerChoice" type="radio" ng-model="gameState.index" ng-value="$index">
+        <label for="answerChoice">{{choice}}</label>
+      </input>
+
+    </form><br>
+
+    <div ng-if="gameState.isCorrect === 'yes'" class="feedback correct">
+      You are CORRECT!
+    </div>
+    <div ng-if="gameState.isCorrect === 'no'" class="feedback incorrect">
+      You are INCORRECT! Correct answer is {{questionSet[0].correct_answer}}
+    </div>
+    <div ng-if="gameState.isCorrect === 'pending'" class="feedback pending">
+      Pick an answer SLOWPOKE!
+    </div>
+    <div ng-if="gameState.gameFinished" class="endgame-message">
+      you got {{gameState.numCorrect}}/{{gameState.questionsAttempted}} correct
+    </div>
+<!--     TODO: use ng-model to capture user selected answers, and check if it is correct. -->
+    <button class="btn btn-primary" type="submit" ng-click="submitAnswer()" ng-disabled="gameState.isCorrect !== 'pending'">Submit answer</button>
+
 </div>
+
