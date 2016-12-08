@@ -68,22 +68,37 @@ angular.module('app.user', ['app.services'])
   // })
 
   $scope.startGame = function() {
-    // _resetGameState();
+    _resetGameState();
+
     UserInfo.getQuestions(function() {
         UserInfo.playGame(handleRoundEnd, handleGameEnd);
     });
 
+    //function is called at the end of every round
     function handleRoundEnd(answerCorrect) {
       $scope.gameState.questionsAttempted++;
       $scope.gameState.isCorrect = "pending";
     }
 
+    //function is called at the end of every game
     function handleGameEnd() {
       console.log('you got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
       $scope.gameState.gameFinished = true;
     }
+
+    //resets the game state to the initial values. called at the start of every game
+    function _resetGameState() {
+      $scope.gameState = {
+        index: -1,
+        isCorrect: "pending",
+        numCorrect: 0,
+        questionsAttempted: 0,
+        gameFinished: false
+      };
+    }
   };
 
+  //no longer used
   $scope.sendQuestion = function() {
     UserInfo.sendQuestion();
   };

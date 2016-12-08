@@ -132,9 +132,9 @@ angular.module('app.services', [])
       //TODO: Emit server request to REDIS DB to get the database of all the active users in the currentroom
 
       return $http({
-        method: 'GET',
-        url: '/api/questions',
-      }).then(function(resp){
+          method: 'GET',
+          url: '/api/questions',
+        }).then(function(resp){
 
         for (var i = 0; i < resp.data.length; i++) {
           resp.data[i].answerChoices = randomizeAnswerChoices(resp.data[i]);
@@ -186,10 +186,7 @@ angular.module('app.services', [])
       gameStart();
     },
 
-    sendQuestion: function(){
-
-
-    },
+    sendQuestion: function(){},
 
     evaluateAnswer: function(selectedIndex, cb) {
       var activeQuestion = $rootScope.questionSet[0];
