@@ -20,9 +20,17 @@
 
     </form><br>
 
-    {{userAnswer.isCorrect}}
+    <div ng-if="userAnswer.isCorrect === 'yes'" class="feedback correct">
+      You are CORRECT!
+    </div>
+    <div ng-if="userAnswer.isCorrect === 'no'" class="feedback incorrect">
+      You are INCORRECT! Correct answer is {{questionSet[0].correct_answer}}
+    </div>
+    <div ng-if="userAnswer.isCorrect === 'pending'" class="feedback pending">
+      Pick an answer SLOWPOKE!
+    </div>
 <!--     TODO: use ng-model to capture user selected answers, and check if it is correct. -->
-    <button class="btn btn-primary" type="submit" ng-click="submitAnswer()">Submit answer</button>
+    <button class="btn btn-primary" type="submit" ng-click="submitAnswer()" ng-disabled="userAnswer.isCorrect !== 'pending'">Submit answer</button>
 
 </div>
 
