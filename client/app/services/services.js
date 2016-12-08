@@ -1,7 +1,7 @@
 // ADD SERVICES AND FACTORIES HERE
 
 angular.module('app.services', [])
-.factory('UserInfo', function($http, $rootScope, $location) {
+.factory('UserInfo', function($http, $rootScope, $location, $timeout) {
   var socket = io.connect();
   return {
     user: '',
@@ -110,14 +110,11 @@ angular.module('app.services', [])
     },
 //////ALISSA Starting Game:
 
-    startGame: function() {
+    getQuestions: function(cb) {
 
       function randomizeAnswerChoices(question) {
-        var answers = [];
+        var answers = question.incorrect_answers;
         answers.push(question.correct_answer);
-        for (var i = 0; i < question.incorrect_answers.length; i++) {
-          answers.push(question.incorrect_answers[i]);
-        }
         answers = shuffleArr(answers);
         return answers;
       }
@@ -131,7 +128,9 @@ angular.module('app.services', [])
         }
         return arr;
       }
-    //TODO: Emit server request to REDIS DB to get the database of all the active users in the currentroom
+
+      //TODO: Emit server request to REDIS DB to get the database of all the active users in the currentroom
+
       return $http({
         method: 'GET',
         url: '/api/questions',
@@ -142,21 +141,57 @@ angular.module('app.services', [])
         }
         $rootScope.questionSet=resp.data;
         console.log('questionSet', JSON.parse(JSON.stringify($rootScope.questionSet)));
+
+        cb();
+
       })
+
+    },
+
+    playGame: function() {
+
+      function _gameEnd() {
+        console.log('game complete')
+      }
+
+      function _roundEnd() {
+        //checkanswers
+        gameStart();
+      }
+
+      function _updateQuestion() {
+        $rootScope.questionSet.shift();
+      }
+
+      function _startTimer() {
+        $timeout(function() {
+          _roundEnd();
+        }, 5000)
+      }
+
+      function gameStart() {
+        if ($rootScope.questionSet.length >1) {
+          _updateQuestion();
+          _startTimer();
+        } else {
+          _gameEnd();
+        }
+      }
+
+      gameStart();
+
 
 
 
     },
 
     sendQuestion: function(){
-      if ($rootScope.questionSet && $rootScope.questionSet.length >1) {
-        $rootScope.questionSet.shift();
-      }
+
 
     },
 
     submitAnswer: function() {
-      console.log('submit answer button has been clicked')
+      console.log('submit answer button has been clicked', $rootScope.$index);
     }
 
   };

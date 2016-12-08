@@ -6,6 +6,7 @@ angular.module('app.user', ['app.services'])
   $scope.rooms = UserInfo.rooms;
   $scope.avatar = UserInfo.avatar;
   $scope.users = {};
+  $scope.selectedIndex = 5;
 
 
   $scope.goToRoom = function(roomName) {
@@ -59,7 +60,12 @@ angular.module('app.user', ['app.services'])
   // })
 
   $scope.startGame = function() {
-    UserInfo.startGame();
+    UserInfo.getQuestions(function() {
+        UserInfo.playGame();
+        // $interval(function() {
+        //   $scope.sendQuestion();
+        // }, 3000);
+    });
   };
 
   $scope.sendQuestion = function() {
@@ -74,14 +80,8 @@ angular.module('app.user', ['app.services'])
   //     // $interval.cancel();
   //   }
 
-  $interval(function() {
-    $scope.sendQuestion();
-  }, 5000);
-
-
-
-
   $scope.submitAnswer=function() {
+    console.log('scope', $scope)
     UserInfo.submitAnswer();
   }
 
