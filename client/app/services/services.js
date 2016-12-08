@@ -148,14 +148,15 @@ angular.module('app.services', [])
 
     },
 
-    playGame: function() {
+    playGame: function(roundEndCb) {
 
       function _gameEnd() {
         console.log('game complete')
       }
 
       function _roundEnd() {
-        //checkanswers
+        //start a new round
+        roundEndCb();
         gameStart();
       }
 
@@ -166,7 +167,7 @@ angular.module('app.services', [])
       function _startTimer() {
         $timeout(function() {
           _roundEnd();
-        }, 5000)
+        }, 7000)
       }
 
       function gameStart() {
@@ -190,8 +191,10 @@ angular.module('app.services', [])
 
     },
 
-    submitAnswer: function() {
-      console.log('submit answer button has been clicked', $rootScope.$index);
+    evaluateAnswer: function(selectedIndex, cb) {
+      var activeQuestion = $rootScope.questionSet[0];
+      var isCorrect = activeQuestion.answerChoices[selectedIndex] === activeQuestion.correct_answer
+      cb(isCorrect);
     }
 
   };

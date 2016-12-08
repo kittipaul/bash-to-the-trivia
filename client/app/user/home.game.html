@@ -14,15 +14,14 @@
 
     <form ng-repeat="choice in questionSet[0].answerChoices track by $index">
     <!-- https://docs.angularjs.org/api/ng/input/input%5Bradio%5D -->
-      <input class="answerChoice" type="radio" ng-model="$index">
+      <input class="answerChoice" type="radio" ng-model="userAnswer.index" ng-value="$index">
         <label for="answerChoice">{{choice}}</label>
       </input>
 
     </form><br>
 
-
+    {{userAnswer.isCorrect}}
 <!--     TODO: use ng-model to capture user selected answers, and check if it is correct. -->
-
     <button class="btn btn-primary" type="submit" ng-click="submitAnswer()">Submit answer</button>
 
 </div>

@@ -1,12 +1,16 @@
 angular.module('app.user', ['app.services'])
 
-.controller('HomeController', function($scope, UserInfo, $interval) {
+.controller('HomeController', function($scope,$rootScope, UserInfo, $interval) {
   //Passing data from the UserInfo factory
   $scope.user = UserInfo.user;
   $scope.rooms = UserInfo.rooms;
   $scope.avatar = UserInfo.avatar;
   $scope.users = {};
-  $scope.selectedIndex = 5;
+  $scope.userAnswer = {
+    index: -1, //default value. index MUST be nested inside userAnswer for ng-model to work here
+    isCorrect: "pending"
+  };
+
 
 
   $scope.goToRoom = function(roomName) {
@@ -61,11 +65,12 @@ angular.module('app.user', ['app.services'])
 
   $scope.startGame = function() {
     UserInfo.getQuestions(function() {
-        UserInfo.playGame();
-        // $interval(function() {
-        //   $scope.sendQuestion();
-        // }, 3000);
+        UserInfo.playGame(handleRoundEnd);
     });
+
+    function handleRoundEnd(answerCorrect) {
+      $scope.userAnswer.isCorrect = "pending";
+    }
   };
 
   $scope.sendQuestion = function() {
@@ -81,8 +86,13 @@ angular.module('app.user', ['app.services'])
   //   }
 
   $scope.submitAnswer=function() {
-    console.log('scope', $scope)
-    UserInfo.submitAnswer();
+    UserInfo.evaluateAnswer($scope.userAnswer.index, function(isCorrect) {
+      if (isCorrect) {
+        $scope.userAnswer.isCorrect = "yes";
+      } else {
+        $scope.userAnswer.isCorrect = "no";
+      }
+    });
   }
 
 //after an answer has been submited, check if it is right or wrong
