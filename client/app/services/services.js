@@ -92,7 +92,7 @@ angular.module('app.services', [])
           admin: context.user
         };
         context.currentRoom = context.rooms[newRoomName];
-        $location.path('/home/room/' + newRoomName); 
+        $location.path('/home/room/' + newRoomName);
       });
     },
     addNewPlayer: function(roomname, newPlayerUsername) {
@@ -120,6 +120,8 @@ angular.module('app.services', [])
     },
 //////ALISSA Starting Game:
 
+//getQuestions --> send request to server/API to fetch a set of 10 questions.
+//in the meantime, mash up the correct answer and incorrect answers and store them all in the answers array.
     getQuestions: function(cb) {
 
       function randomizeAnswerChoices(question) {
@@ -139,8 +141,6 @@ angular.module('app.services', [])
         return arr;
       }
 
-      //TODO: Emit server request to REDIS DB to get the database of all the active users in the currentroom
-
       return $http({
           method: 'GET',
           url: '/api/questions',
@@ -148,22 +148,23 @@ angular.module('app.services', [])
 
         for (var i = 0; i < resp.data.length; i++) {
           resp.data[i].answerChoices = randomizeAnswerChoices(resp.data[i]);
-        }
-        $rootScope.questionSet=resp.data;
-        console.log('questionSet', JSON.parse(JSON.stringify($rootScope.questionSet)));
+        };
 
+        $rootScope.questionSet=resp.data;
+        // console.log('questionSet', JSON.parse(JSON.stringify($rootScope.questionSet)));
         cb();
 
       })
 
+
     },
 
     playGame: function(roundEndCb, gameEndCb) {
-      var roundDuration = 7000;
+      var roundDuration = 5000;
       //Triggered at the start of every question. Updates the question to the next one
-      function _updateQuestion() {
-        $rootScope.questionSet.shift();
-      }
+      // function _updateQuestion() {
+      //   $rootScope.questionSet.shift();
+      // }
 
       //Triggered at the start of every question. Starts a timer of roundDuration milliseconds.
       function _startTimer(roundDuration) {
@@ -185,18 +186,22 @@ angular.module('app.services', [])
 
       //starts the whole game. gameStart is recursive as it calls itself inside of startTimer via _roundEnd(). Once game has ended (as determined by there being no more questions in questionSet) _gameEnd is triggered
       function gameStart() {
-        if ($rootScope.questionSet.length >1) {
-          _updateQuestion();
+        if ($rootScope.questionSet.length > 1) {
           _startTimer(roundDuration);
+          // $rootScope.questionSet.shift();
+
+        // } else if ($rootScope.questionSet.length === 1) {
+        //   _roundEnd();
+        //   _gameEnd();
+
         } else {
           _gameEnd();
+
         }
       }
 
       gameStart();
     },
-
-    sendQuestion: function(){},
 
     evaluateAnswer: function(selectedIndex, cb) {
       var activeQuestion = $rootScope.questionSet[0];

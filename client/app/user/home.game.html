@@ -29,11 +29,11 @@
     <div ng-if="gameState.isCorrect === 'pending'" class="feedback pending">
       Pick an answer SLOWPOKE!
     </div>
-    <div ng-if="gameState.gameFinished" class="endgame-message">
-      you got {{gameState.numCorrect}}/{{gameState.questionsAttempted}} correct
-    </div>
-<!--     TODO: use ng-model to capture user selected answers, and check if it is correct. -->
     <button class="btn btn-primary" type="submit" ng-click="submitAnswer()" ng-disabled="gameState.isCorrect !== 'pending'">Submit answer</button>
+    </br></br></br>
+    <div ng-if="gameState.gameFinished" class="endgame-message">
+      You got {{gameState.numCorrect}}/{{gameState.questionsAttempted}} correct!
+    </div>
 
 </div>
 

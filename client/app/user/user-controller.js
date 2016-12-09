@@ -86,24 +86,29 @@ angular.module('app.user', ['app.services'])
 
   $scope.startGame = function() {
     _resetGameState();
-
-    UserInfo.getQuestions(function() {
-        UserInfo.playGame(handleRoundEnd, handleGameEnd);
+//have to be nested, in order to get the questionSet first
+    UserInfo.getQuestions(function(){
+      UserInfo.playGame(handleRoundEnd, handleGameEnd);
     });
 
-    //function is called at the end of every round
+//function is called at the end of every round
     function handleRoundEnd(answerCorrect) {
       $scope.gameState.questionsAttempted++;
       $scope.gameState.isCorrect = "pending";
+      $rootScope.questionSet.shift();
+
     }
 
-    //function is called at the end of every game
+//function is called at the end of every game
     function handleGameEnd() {
-      console.log('you got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
-      $scope.gameState.gameFinished = true;
+      $scope.gameState.questionsAttempted++;
+      $scope.gameState.isCorrect = "pending";
+
+      // console.log('You got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
+      // $scope.gameState.gameFinished = true;
     }
 
-    //resets the game state to the initial values. called at the start of every game
+//resets the game state to the initial values. called at the start of every game
     function _resetGameState() {
       $scope.gameState = {
         index: -1,
@@ -115,18 +120,6 @@ angular.module('app.user', ['app.services'])
     }
   };
 
-  //no longer used
-  $scope.sendQuestion = function() {
-    UserInfo.sendQuestion();
-  };
-
-  // var len = $scope.questionSet.length;
-  //   if (len === 0 ) {
-  //     console.log(len,'length checki')
-  //     return;
-
-  //     // $interval.cancel();
-  //   }
 
   $scope.submitAnswer=function() {
     UserInfo.evaluateAnswer($scope.gameState.index, function(isCorrect) {
@@ -137,13 +130,13 @@ angular.module('app.user', ['app.services'])
         $scope.gameState.isCorrect = "no";
       }
     });
+
+    if ($scope.gameState.questionsAttempted === 10 ) {
+      $scope.gameState.gameFinished = true;
+      // console.log('You got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
+
+    }
   }
-
-//after an answer has been submited, check if it is right or wrong
-  // $scope.submitAnswer=function() {
-  //   UserInfo.submitAnswer();
-  // };
-
 
 //////////////////////////////
 
