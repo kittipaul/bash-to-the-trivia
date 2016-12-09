@@ -285,7 +285,9 @@ app.get('/api/questions', function(req, res) {
     });
   })
   promise.then(function(body) {
+    // console.log(body);
     var temp = JSON.parse(body).results;
+
       for(var i = 0; i < 10; i++) {
         var qt = new Question({
           question: temp[i].question,

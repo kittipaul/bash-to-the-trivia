@@ -73,10 +73,10 @@ angular.module('app.user', ['app.services'])
 
 
 
-///ALISSA Starting Game:
+///////////////// ...ALISSA Starting on Game... /////////////////
+
   // UserInfo.on('startGame', function(){
   //   UserInfo.startGame();
-
   // });
 
   // UserInfo.on('submitAnswer', function() {
@@ -96,16 +96,11 @@ angular.module('app.user', ['app.services'])
       $scope.gameState.questionsAttempted++;
       $scope.gameState.isCorrect = "pending";
       $rootScope.questionSet.shift();
-
     }
 
 //function is called at the end of every game
     function handleGameEnd() {
-      // $scope.gameState.questionsAttempted++;
       $scope.gameState.isCorrect = "pending";
-
-      // console.log('You got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
-      // $scope.gameState.gameFinished = true;
     }
 
 //resets the game state to the initial values. called at the start of every game
@@ -120,7 +115,7 @@ angular.module('app.user', ['app.services'])
     }
   };
 
-
+//when user submits an answer, checks to see if it is the right answer.
   $scope.submitAnswer=function() {
     UserInfo.evaluateAnswer($scope.gameState.index, function(isCorrect) {
       if (isCorrect) {
@@ -131,18 +126,14 @@ angular.module('app.user', ['app.services'])
       }
     });
 
-    console.log('hacking', $scope.gameState.questionsAttempted)
-
     if ($scope.gameState.questionsAttempted ===10) {
       $scope.gameState.gameFinished = true;
-      // console.log('You got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
-
     }
   }
-
-//////////////////////////////
-
 })
+
+///////////////// ...ALISSA Ending on Game... /////////////////
+
 
 
 .controller('ProfileController', function($scope, UserInfo, $rootScope) {

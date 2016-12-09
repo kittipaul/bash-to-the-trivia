@@ -118,18 +118,18 @@ angular.module('app.services', [])
     invitedToNewRoom: function(roomInfo) {
       this.rooms[roomInfo.roomname] = roomInfo;
     },
-//////ALISSA Starting Game:
+
+///////////////// ...ALISSA Starting on Game... /////////////////
 
 //getQuestions --> send request to server/API to fetch a set of 10 questions.
 //in the meantime, mash up the correct answer and incorrect answers and store them all in the answers array.
     getQuestions: function(cb) {
-
       function randomizeAnswerChoices(question) {
         var answers = question.incorrect_answers;
         answers.push(question.correct_answer);
         answers = shuffleArr(answers);
         return answers;
-      }
+      };
 
       function shuffleArr(arr) {
         for (var i = 0; i < arr.length; i++) {
@@ -139,7 +139,7 @@ angular.module('app.services', [])
           arr[i] = temp;
         }
         return arr;
-      }
+      };
 
       return $http({
           method: 'GET',
@@ -151,20 +151,13 @@ angular.module('app.services', [])
         };
 
         $rootScope.questionSet=resp.data;
-        // console.log('questionSet', JSON.parse(JSON.stringify($rootScope.questionSet)));
+
         cb();
-
       })
-
-
     },
 
     playGame: function(roundEndCb, gameEndCb) {
-      var roundDuration = 2000;
-      //Triggered at the start of every question. Updates the question to the next one
-      // function _updateQuestion() {
-      //   $rootScope.questionSet.shift();
-      // }
+      var roundDuration = 6000;
 
       //Triggered at the start of every question. Starts a timer of roundDuration milliseconds.
       function _startTimer(roundDuration) {
@@ -188,15 +181,8 @@ angular.module('app.services', [])
       function gameStart() {
         if ($rootScope.questionSet.length > 1) {
           _startTimer(roundDuration);
-          // $rootScope.questionSet.shift();
-
-        // } else if ($rootScope.questionSet.length === 1) {
-        //   _roundEnd();
-        //   _gameEnd();
-
         } else {
           _gameEnd();
-
         }
       }
 
@@ -208,6 +194,8 @@ angular.module('app.services', [])
       var isCorrect = activeQuestion.answerChoices[selectedIndex] === activeQuestion.correct_answer
       cb(isCorrect);
     }
+
+///////////////// ...ALISSA Ending on Game... /////////////////
 
   };
 });
