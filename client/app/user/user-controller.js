@@ -101,7 +101,7 @@ angular.module('app.user', ['app.services'])
 
 //function is called at the end of every game
     function handleGameEnd() {
-      $scope.gameState.questionsAttempted++;
+      // $scope.gameState.questionsAttempted++;
       $scope.gameState.isCorrect = "pending";
 
       // console.log('You got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
@@ -114,7 +114,7 @@ angular.module('app.user', ['app.services'])
         index: -1,
         isCorrect: "pending",
         numCorrect: 0,
-        questionsAttempted: 0,
+        questionsAttempted: 1,
         gameFinished: false
       };
     }
@@ -131,7 +131,9 @@ angular.module('app.user', ['app.services'])
       }
     });
 
-    if ($scope.gameState.questionsAttempted === 10 ) {
+    console.log('hacking', $scope.gameState.questionsAttempted)
+
+    if ($scope.gameState.questionsAttempted ===10) {
       $scope.gameState.gameFinished = true;
       // console.log('You got ' + $scope.gameState.numCorrect + '/' + $scope.gameState.questionsAttempted + ' correct');
 
