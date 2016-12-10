@@ -141,6 +141,12 @@ angular.module('app.services', [])
         return arr;
       };
 
+      //starts with %, and ends with ;
+      //find charStart:%* charEnd;
+      //2 replace stmt
+      //1. '
+      //2. ""
+
       return $http({
           method: 'GET',
           url: '/api/questions',
@@ -151,6 +157,7 @@ angular.module('app.services', [])
         };
 
         $rootScope.questionSet=resp.data;
+        console.log('test', $rootScope)
 
         cb();
       })

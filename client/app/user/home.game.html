@@ -7,36 +7,33 @@
 
 	<span id="timer"><strong>Timer... </strong></span><br><br>
 
-<!-- ...ALISSA starting on Game...
- -->
+<!-- ...ALISSA starting on Game... -->
+
   <h5><strong>Question {{gameState.questionsAttempted}} of 10: {{questionSet[0].question}}</strong></h5>
 
   	<label><strong>Answers: </strong></label>
 
     <form ng-repeat="choice in questionSet[0].answerChoices track by $index">
-    <!-- https://docs.angularjs.org/api/ng/input/input%5Bradio%5D -->
       <input class="answerChoice" type="radio" ng-model="gameState.index" ng-value="$index">
         <label for="answerChoice">{{choice}}</label>
       </input>
-
     </form><br>
 
     <div ng-if="gameState.isCorrect === 'yes'" class="feedback correct">
       You are CORRECT!
     </div>
     <div ng-if="gameState.isCorrect === 'no'" class="feedback incorrect">
-      You are INCORRECT! Correct answer is {{questionSet[0].correct_answer}}
+      You are INCORRECT! The correct answer is {{questionSet[0].correct_answer}}.
     </div>
     <div ng-if="gameState.isCorrect === 'pending'" class="feedback pending">
       Pick an answer SLOWPOKE!
     </div>
     <button class="btn btn-primary" type="submit" ng-click="submitAnswer()" ng-disabled="gameState.isCorrect !== 'pending'">Submit answer</button>
-    </br></br></br>
+    </br></br>
     <div ng-if="gameState.gameFinished" class="endgame-message">
       You got {{gameState.numCorrect}}/{{gameState.questionsAttempted}} correct!
     </div>
 
 </div>
 
-<!-- ...ALISSA ending on Game...
- -->
+<!-- ...ALISSA ending on Game... -->
