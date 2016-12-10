@@ -286,7 +286,34 @@ app.get('/api/questions', function(req, res) {
   })
   promise.then(function(body) {
     // console.log(body);
-    var temp = JSON.parse(body).results;
+    var temp0 = JSON.parse(body).results;
+
+    function translate(src){
+      var result={};
+      for (var i =0; i<src.length;i++) {
+
+        var q = src[i].question;
+        //two most commonly seen one, see if you can combine them into 1 line of code
+        var question = q.replace(/&quot;/gi, '\'').replace(/&#039;/gi,'\'');
+        //less comon
+        // var question= q2.replace(/&eacute;/gi,'e');
+        result['question']=question;
+
+        var ca=src[i].correct_answer;
+        var correct_answer=ca.replace(/&quot;/gi, '\'').replace(/&#039;/gi,'\'');
+        result['correct_answer']=correct_answer;
+
+        var ia=src[i].incorrect_answers;
+        var incorrect_answers = [];
+        for (j = 0; j<ia.length; j++) {
+          incorrect_answers.push(ia[j].replace(/&quot;/gi, '\'').replace(/&#039;/gi,'\''));
+        };
+        result['incorrect_answers']=incorrect_answers;
+        };
+      return result;
+    }
+
+    var temp = translate(temp0);
 
       for(var i = 0; i < 10; i++) {
         var qt = new Question({
