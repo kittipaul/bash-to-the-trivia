@@ -323,6 +323,7 @@ app.get('/api/questions', function(req, res) {
         });
         qt.save();
       }
+
     res.json(temp);
   }).catch(function(err) {
         console.log(err)

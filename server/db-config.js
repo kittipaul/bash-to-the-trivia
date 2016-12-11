@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/users');
+var currentDB = process.env.MONGO_URL || 'mongodb://localhost/users';
+
+
+//set the connect URL to currentDB;
+mongoose.connect(currentDB);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
