@@ -1,22 +1,22 @@
 
 <div id="wrapper">
 	<div id="sidebar-wrapper">
-		<h3 class="username" ui-sref=".profile">{{user.username}}</h3>
+		<h3 class="username" ui-sref=".profile">{{user.username}}</h3><hr/>
 		<ul>
-			<h4>Rooms</h4>
+			<h4 class="sb-room">Rooms</h4>
 			  <li ng-repeat="roomnameObj in rooms" ng-click="goToRoom(roomnameObj)">
-			  	<a ui-sref=".room({roomname: roomnameObj.roomname})">{{roomnameObj.roomname}}</a>
-			  </li>
-			<br>
+			  <a class="sb-room" ui-sref=".room({roomname: roomnameObj.roomname})">{{roomnameObj.roomname}}</a>
+			  </li><br> 
 
-			<form name="newRoom" ng-submit="addRoom(newRoomName)">
-		    <input type="text" name="newthing" ng-model="newRoomName" /><br>
-		    <input type="submit" value="Add Room" /><br>
-		  </form><br><br>
+    		<form name="newRoom" ng-submit="addRoom(newRoomName)"> 
+		    	<p class=add-room>Add new room</p>
+		    	<input type="text" name="newthing" ng-model="newRoomName" placeholder="ex. HRroom"/>
+		  	</form><br><br>
 
-		  <h4>My Friends</h4>
-		  <li ng-repeat="users in activeUsers">{{users}}</li>
-
+		  <h4 class="sb-friend">My Friends</h4>
+		  <li>
+		  	<a class="sb-friend" href="">[A list of friends]</a>
+		  </li>
 		</ul>
 	</div>
 	<div ui-view></div>

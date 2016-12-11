@@ -37,8 +37,7 @@ angular.module('app', ['app.auth', 'app.user', 'ui.router'])
   })
   .state('otherwise', {
     url: '*path',
-    templateUrl: 'app/auth/signin.html',
-    controller: 'AuthController'
+    templateUrl: 'app/user/landing-page.html',
   });
 
   // $httpProvider.interceptors.push('AttachTokens');

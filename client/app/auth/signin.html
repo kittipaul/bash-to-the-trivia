@@ -1,13 +1,25 @@
 <div class="auth">
-	<h1>Signin</h1><hr>
-	<form ng-submit='signIn()'>
-		<label>Username</label><br>
-	  <input placehoder="Username" ng-model="user.username"/><br><br>
-	  <label>Password</label><br>
-	  <input type="password" placehoder="Password" ng-model="user.password"/> 
-	  <br>
-	  <button class="btn">Signin</button>
-	  <pre>user={{user.username}}</pre>
-	  <pre>user.username={{user.username}}</pre>
-	</form>
+
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Sign In</h1>
+
+			<form ng-submit='signIn()'>
+				<label>Username</label><br>
+			  <input placehoder="Username" ng-model="user.username"/><br>
+			  <label>Password</label><br>
+			  <input type="password" placehoder="Password" ng-model="user.password"/> 
+			  <br>
+			  <button class="btn btn-primary">Sign In</button>
+		<!--<pre>user={{user.username}}</pre>
+			  <pre>user.username={{user.username}}</pre> -->
+			</form>
+			<br>
+    <h5>Don't have an account yet?  <a ui-sref="signupState">Signup</a> </h5>
+  </div>
+    
 </div>
+
+
+
+

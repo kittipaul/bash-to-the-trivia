@@ -6,15 +6,82 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
- body {
+
+body {
     overflow-x: hidden;
-/*    padding-left: 30px;
-*/ }
+    background-image: url("landing-bg.jpg");
+    background-color: black;
+}
+
+h1, h2, p.ld-1 {
+    font-family: 'Lobster', cursive;
+}
+
+h2.header-top {
+    color: #2E79B2;
+    font-size: 44px;
+    font-weight: bolder;
+}
+
+h2.game-head {
+    font-family: 'Acme', sans-serif;
+    padding-top: 10px;
+}
+
+h3, h3.ng-binding, h4 {
+    font-family: 'Acme', sans-serif;
+}
+
+h3.ng-binding {
+    padding-top: 20px;
+}
+
+h3.username.ng-binding {
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 40px;
+    margin-top: 0;
+}
+
+h4.sb-room, h4.sb-friend {
+    font-size: 27px;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+}
+
+a.sb-room.ng-binding, a.sb-friend {
+    font-size: 17px;
+    color: #F1AD69;
+}
+
+p.add-room {
+    color: white;
+    font-size: 15px;
+    margin-bottom-bottom: 0;
+    font-family: 'Fredoka One', cursive;
+}
 
 button {
-	margin-top: 10px; 
+    margin-top: 10px; 
 }
-/* Toggle Styles */
+
+button.btn.btn-secondary {
+    size: 40%;
+    font-size: 17px;
+    background-color: white;
+    color: #5A5E62;
+    margin-left: 40%;
+    font-family: 'Acme', sans-serif;
+}
+
+button.btn.btn-secondary1 {
+    size: 40%;
+    font-size: 17px;
+    background-color: white;
+    color: #5A5E62;
+    margin-left: 4%;
+    font-family: 'Acme', sans-serif;
+}
 
 #wrapper {
     padding-left: 0;
@@ -30,7 +97,7 @@ button {
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: fixed;
+    position: absolute;
     left: 250px;
     width: 0;
     height: 100%;
@@ -41,6 +108,7 @@ button {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    background-color: #4E4A4A;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -51,26 +119,30 @@ button {
     width: 100%;
     position: absolute;
     padding: 30px;
+    background-color: rgba(211,211,211,0.4);
 }
 
 #page-room-wrapper {
     width: 100%;
     position: absolute;
     padding: 30px;
+    padding-top: 0;
+    background-color: rgba(211,211,211,0.4);
+
 }
 
 #page-game-wrapper {
     width: 100%;
     position: absolute;
     padding: 30px;
+    background-color: rgba(211,211,211,0.4);
+    padding-top: 0;
 }
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
 }
-
-/* Sidebar Styles */
 
 .sidebar-nav {
     position: absolute;
@@ -84,6 +156,7 @@ button {
 .sidebar-nav li {
     text-indent: 20px;
     line-height: 40px;
+    float: right;
 }
 
 .sidebar-nav li a {
@@ -138,6 +211,7 @@ button {
     #page-content-wrapper {
         padding: 20px;
         position: relative;
+        /*background-color: black;*/
     }
 
     #wrapper.toggled #page-content-wrapper {
@@ -145,13 +219,6 @@ button {
         margin-right: 0;
     }
 }
-
-
-/*.h1, .h2, .h3, h1, h2, h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    padding: 10px;
-}*/
 
 .navbar-default {
     margin: 0px;
@@ -169,7 +236,6 @@ button {
     color: #ff4455;
 }
 
-
 strong {
     font-size: 17px;
 }
@@ -178,10 +244,34 @@ strong {
     padding-left: 20px;
 }
 
+.pull-right {
+    padding-left: 15px;
+    font-family: 'Lobster', cursive;
+    font-size: 18px;
+}
 
+.jumbotron {
+    background-color: rgba(211,211,211,0.5);
+}
 
+.landing-page {
+    color: white;
+    padding-top: 13%;
+}
 
+.ld-header {
+    font-size: 80px;
+    text-align: center;
+}
 
+.ld-1 {
+    font-size: 25px;
+    text-align: center;
+}
+
+.ld-2 {
+    text-align: center;
+}
 
 
 

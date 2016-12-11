@@ -1,28 +1,30 @@
-<div id="page-room-wrapper">
-	<h3>{{currentRoom.roomname}}</h3><hr>
+<div>
+	<div id="page-room-wrapper">
+		<h3>{{currentRoom.roomname}}</h3><hr>
 
-	<div class="players">
-		<h3>Players</h3>
-	  <div class="gamePlayer">
-		  <ul>
-		  	<li ng-repeat="name in currentRoom.users | orderBy: '-score'">{{name.username}}  score {{name.score}}
-		  	</li>
-		  </ul>
+		<div class="players">
+			<h3>Players</h3>
+		  <div class="gamePlayer">
+			  <ul>
+			  	<li ng-repeat="name in currentRoom.users | orderBy: '-score'">{{name.username}}  score {{name.score}}
+			  	</li>
+			  </ul>
 
 
-		  <form ng-hide="currentRoom.roomname === 'Lobby'" name="newPlayer" ng-submit="addPlayer(newPlayer.username)">
-		  	<input name="newPlayerUsername" type="text" ng-model="newPlayer.username"/>
-		  	<input type="submit" class="btn" value="Add Player"/>
-		  </form>
+			  <form ng-hide="currentRoom.roomname === 'Lobby'" name="newPlayer" ng-submit="addPlayer(newPlayer.username)">
+			  	<input name="newPlayerUsername" type="text" ng-model="newPlayer.username"/>
+			  	<input type="submit" class="btn" value="Add Player"/>
+			  </form>
+			</div>
 		</div>
+
+
+		<button class="startGame btn" ui-sref="homeState.game" ng-click="startGame()">Start Game</button> <br>
+		<hr>
+<!-- 		<h5>Pre for {{currentRoom.roomname}}</h5>
+		<pre>currentRoom.roomname={{currentRoom.roomname}}</pre>
+		<pre>rooms={{rooms}}</pre>
+		<button class="deleteGame btn">Delete Game</button> --> <!-- ng-click="deleteGame()" -->
+		<!-- <hr> -->
 	</div>
-
-
-	<button class="startGame btn" ui-sref="homeState.game" ng-click="startGame()">Start Game</button> <br>
-	<hr>
-	<h5>Pre for {{currentRoom.roomname}}</h5>
-	<pre>currentRoom.roomname={{currentRoom.roomname}}</pre>
-	<pre>rooms={{rooms}}</pre>
-	<button class="deleteGame btn">Delete Game</button> <!-- ng-click="deleteGame()" -->
-	<hr>
 </div>
